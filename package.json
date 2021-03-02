@@ -1,0 +1,8 @@
+{
+  "name": "fragments",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:shoya140/fragments.git",
+  "author": "shoya140",
+  "license": "MIT"
+}
