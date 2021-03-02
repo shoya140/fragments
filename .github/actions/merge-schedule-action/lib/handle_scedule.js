@@ -2,7 +2,6 @@ module.exports = handleSchedule;
 
 const core = require("@actions/core");
 const { Octokit } = require("@octokit/action");
-const localeDate = require("./locale_date");
 
 /**
  * handle "schedule" event
@@ -25,13 +24,11 @@ async function handleSchedule() {
     },
     (response) => {
       return response.data
-        .filter((pullRequest) => hasScheduleCommand(pullRequest))
         .filter((pullRequest) => isntFromFork(pullRequest))
         .map((pullRequest) => {
           return {
             number: pullRequest.number,
             html_url: pullRequest.html_url,
-            scheduledDate: getScheduleDateString(pullRequest.body),
             ref: pullRequest.head.sha,
           };
         });
@@ -44,17 +41,7 @@ async function handleSchedule() {
     return;
   }
 
-  const duePullRequests = pullRequests.filter(
-    (pullRequest) => new Date(pullRequest.scheduledDate) < localeDate()
-  );
-
-  core.info(`${duePullRequests.length} due pull requests found`);
-
-  if (duePullRequests.length === 0) {
-    return;
-  }
-
-  for await (const pullRequest of duePullRequests) {
+  for await (const pullRequest of pullRequests) {
     await octokit.pulls.merge({
       owner,
       repo,
@@ -80,7 +67,7 @@ async function handleSchedule() {
       head_sha: eventPayload.pull_request.head.sha,
       status: "completed",
       output: {
-        title: `Scheduled on ${datestring}`,
+        title: "Scheduled pull request",
         summary: "Merged successfully",
       },
     });
@@ -89,14 +76,6 @@ async function handleSchedule() {
   }
 }
 
-function hasScheduleCommand(pullRequest) {
-  return /(^|\n)\/schedule /.test(pullRequest.body);
-}
-
 function isntFromFork(pullRequest) {
   return !pullRequest.head.repo.fork;
-}
-
-function getScheduleDateString(text) {
-  return text.match(/(^|\n)\/schedule (.*)/).pop();
 }
