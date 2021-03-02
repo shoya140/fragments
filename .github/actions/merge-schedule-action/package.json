@@ -1,0 +1,16 @@
+{
+  "name": "merge-schedule-action",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "ncc build index.js -o dist"
+  },
+  "author": "shoya140",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@octokit/action": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.27.0"
+  }
+}

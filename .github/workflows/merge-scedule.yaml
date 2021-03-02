@@ -1,0 +1,17 @@
+name: Merge Schedule
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+  schedule:
+    - cron: 0 * * * *
+
+jobs:
+  merge_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/actions/merge-schedule-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
