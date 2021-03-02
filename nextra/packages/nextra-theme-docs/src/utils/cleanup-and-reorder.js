@@ -34,12 +34,13 @@ export default function cleanupAndReorder(list, locale, defaultLocale) {
         (a.locale === locale || ((a.locale === defaultLocale || !a.locale) && !hasLocale.get(a.name)))
     )
     .sort((a, b) => {
-      const indexA = metaKeys.indexOf(a.name) 
+      // TODO: add reversePageOrder in theme.config.js
+      const indexA = metaKeys.indexOf(a.name)
       const indexB = metaKeys.indexOf(b.name)
-      if (indexA === -1 && indexB === -1) return a.name < b.name ? -1 : 1
-      if (indexA === -1) return 1
-      if (indexB === -1) return -1
-      return indexA - indexB
+      if (indexA === -1 && indexB === -1) return a.name > b.name ? -1 : 1
+      if (indexA === -1) return -1
+      if (indexB === -1) return 1
+      return indexB - indexA
     })
     .map(a => {
       return {
