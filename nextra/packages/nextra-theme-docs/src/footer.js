@@ -90,24 +90,25 @@ const Footer = ({
         </div>
       </nav>
 
-      <hr />
-
       {config.footer ? (
-        <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
-          <span className="text-gray-600">
-            {renderComponent(config.footerText, { locale })}
-          </span>
-          <div className="mt-6" />
-          {config.footerEditOnGitHubLink ? (
-            <EditOnGithubLink
-              repository={config.docsRepository || config.repository}
-              branch={config.branch}
-              path={config.path}
-              footerEditOnGitHubText={config.footerEditOnGitHubText}
-              filepathWithName={filepathWithName}
-            />
-          ) : null}
-        </div>
+        <>
+          <hr />
+          <div className="mt-24 flex justify-between flex-col-reverse md:flex-row items-center md:items-end">
+            <span className="text-gray-600">
+              {renderComponent(config.footerText, { locale })}
+            </span>
+            <div className="mt-6" />
+            {config.footerEditOnGitHubLink ? (
+              <EditOnGithubLink
+                repository={config.docsRepository || config.repository}
+                branch={config.branch}
+                path={config.path}
+                footerEditOnGitHubText={config.footerEditOnGitHubText}
+                filepathWithName={filepathWithName}
+              />
+            ) : null}
+          </div>
+        </>
       ) : null}
     </footer>
   )
