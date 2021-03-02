@@ -2,6 +2,7 @@
   "name": "merge-schedule-action",
   "version": "1.0.0",
   "scripts": {
+    "dev": "ncc run index.js",
     "build": "ncc build index.js -o dist"
   },
   "author": "shoya140",

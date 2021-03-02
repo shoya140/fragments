@@ -8,7 +8,7 @@ module.exports =
 const core = __nccwpck_require__(481);
 
 const handlePullRequest = __nccwpck_require__(500);
-const handleSchedule = __nccwpck_require__(476);
+const handleSchedule = __nccwpck_require__(96);
 
 main();
 
@@ -70,6 +70,94 @@ async function handlePullRequest() {
     },
   });
   core.info(`Check run created: ${data.html_url}`);
+}
+
+
+/***/ }),
+
+/***/ 96:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+module.exports = handleSchedule;
+
+const core = __nccwpck_require__(481);
+const { Octokit } = __nccwpck_require__(618);
+
+/**
+ * handle "schedule" event
+ */
+async function handleSchedule() {
+  const octokit = new Octokit();
+  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+
+  const eventPayload = require(process.env.GITHUB_EVENT_PATH);
+
+  const mergeMethod = process.env.INPUT_MERGE_METHOD
+
+  core.info(`Loading open pull request`);
+  const pullRequests = await octokit.paginate(
+    "GET /repos/:owner/:repo/pulls",
+    {
+      owner,
+      repo,
+      state: "open",
+    },
+    (response) => {
+      return response.data
+        .filter((pullRequest) => isntFromFork(pullRequest))
+        .map((pullRequest) => {
+          return {
+            number: pullRequest.number,
+            html_url: pullRequest.html_url,
+            ref: pullRequest.head.sha,
+          };
+        });
+    }
+  );
+
+  core.info(`${pullRequests.length} scheduled pull requests found`);
+
+  if (pullRequests.length === 0) {
+    return;
+  }
+
+  for await (const pullRequest of pullRequests) {
+    await octokit.pulls.merge({
+      owner,
+      repo,
+      pull_number: pullRequest.number,
+      merge_method: mergeMethod
+    });
+
+    // find check runs by the Merge schedule action
+    const checkRuns = await octokit.paginate(octokit.checks.listForRef, {
+      owner: eventPayload.repository.owner.login,
+      repo: eventPayload.repository.name,
+      ref: pullRequest.ref,
+    });
+
+    const checkRun = checkRuns.pop();
+    if (!checkRun) continue;
+
+    await octokit.checks.update({
+      check_run_id: checkRun.id,
+      owner: eventPayload.repository.owner.login,
+      repo: eventPayload.repository.name,
+      name: "Merge Schedule",
+      head_sha: eventPayload.pull_request.head.sha,
+      status: "completed",
+      output: {
+        title: "Scheduled pull request",
+        summary: "Merged successfully",
+      },
+    });
+
+    core.info(`${pullRequest.html_url} merged`);
+  }
+}
+
+function isntFromFork(pullRequest) {
+  return !pullRequest.head.repo.fork;
 }
 
 
@@ -4844,14 +4932,6 @@ function wrappy (fn, cb) {
     return ret
   }
 }
-
-
-/***/ }),
-
-/***/ 476:
-/***/ ((module) => {
-
-module.exports = eval("require")("./lib/handle_schedule");
 
 
 /***/ }),
