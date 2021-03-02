@@ -12,6 +12,6 @@ jobs:
   merge_schedule:
     runs-on: ubuntu-latest
     steps:
-      - uses: .github/actions/merge-schedule-action
+      - uses: ./.github/actions/merge-schedule-action
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
