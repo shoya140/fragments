@@ -14,23 +14,23 @@ body {
 }
 
 h1 {
-  @apply text-4xl font-bold tracking-tight mt-2;
+  @apply text-3xl font-bold tracking-tight mt-2;
 }
 h2 {
-  @apply text-3xl font-semibold tracking-tight mt-10;
+  @apply text-2xl font-semibold tracking-tight mt-10;
   @apply pb-1 border-b;
 }
 .dark h2 {
   @apply border-gray-900;
 }
 h3 {
-  @apply text-2xl font-semibold tracking-tight mt-8;
-}
-h4 {
   @apply text-xl font-semibold tracking-tight mt-8;
 }
-h5 {
+h4 {
   @apply text-lg font-semibold tracking-tight mt-8;
+}
+h5 {
+  @apply text-base font-semibold tracking-tight mt-8;
 }
 h6 {
   @apply text-base font-semibold tracking-tight mt-8;
