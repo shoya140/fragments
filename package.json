@@ -14,7 +14,8 @@
     "build:theme-docs": "yarn workspace nextra-theme-docs run build",
     "dev:merge-schedule-action": "yarn workspace merge-schedule-action run dev",
     "build:merge-schedule-action": "yarn workspace merge-schedule-action run build",
-    "start": "next start"
+    "start": "next start",
+    "fmt": "prettier --write '.github/actions/merge-schedule-action/lib/*.js' '.github/actions/merge-schedule-action/index.js'"
   },
   "main": "index.js",
   "repository": "git@github.com:shoya140/fragments.git",

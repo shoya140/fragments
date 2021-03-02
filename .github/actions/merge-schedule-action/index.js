@@ -1,20 +1,20 @@
-const core = require("@actions/core");
+const core = require('@actions/core')
 
-const handlePullRequest = require("./lib/handle_pull_request");
-const handleSchedule = require("./lib/handle_schedule");
+const handlePullRequest = require('./lib/handle_pull_request')
+const handleSchedule = require('./lib/handle_schedule')
 
-main();
+main()
 
 async function main() {
-  if (process.env.GITHUB_EVENT_NAME === "pull_request") {
-    return handlePullRequest();
+  if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
+    return handlePullRequest()
   }
 
-  handleSchedule();
+  handleSchedule()
 }
 
-process.on("unhandledRejection", (reason, promise) => {
-  core.warning("Unhandled Rejection at:");
-  core.warning(promise);
-  core.setFailed(reason);
-});
+process.on('unhandledRejection', (reason, promise) => {
+  core.warning('Unhandled Rejection at:')
+  core.warning(promise)
+  core.setFailed(reason)
+})
