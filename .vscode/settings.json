@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        ".next": true,
+        "**/dist": true,
+        "**/node_modules": true,
+        "nextra/examples": true,
+        "nextra/packages/nextra-theme-blog": true
+    }
+}
