@@ -132,7 +132,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        dark: '#111'
+        dark: '#0f0f1a'
       }
     }
   },
