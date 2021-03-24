@@ -7,7 +7,7 @@ export default {
   nextLinks: true,
   prevLinks: true,
   search: true,
-  customSearch: null, // customizable, you can use algolia for example
+  UNSTABLE_stork: true,
   darkMode: true,
   footer: false,
   footerText: '2021 © Shoya Ishimaru',

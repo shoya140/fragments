@@ -12,6 +12,7 @@
     "build": "yarn build:core && yarn build:theme-docs && yarn next build",
     "build:core": "yarn workspace nextra run build",
     "build:theme-docs": "yarn workspace nextra-theme-docs run build",
+    "build:vercel": "STORK_PATH=$(pwd)/bin/stork.bin yarn build",
     "dev:merge-schedule-action": "yarn workspace merge-schedule-action run dev",
     "build:merge-schedule-action": "yarn workspace merge-schedule-action run build",
     "start": "next start"
