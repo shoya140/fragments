@@ -1,6 +1,6 @@
 {
   "name": "nextra",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "Next.js and MDX based site generator.",
   "main": "index.js",
   "files": [
@@ -22,10 +22,12 @@
     "graceful-fs": "^4.2.6",
     "gray-matter": "^4.0.2",
     "loader-utils": "^2.0.0",
-    "slash": "^3.0.0"
+    "remark": "^13.0.0",
+    "slash": "^3.0.0",
+    "strip-markdown": "^4.0.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.1"
+    "react": ">=16.13.1"
   },
   "devDependencies": {
     "microbundle": "^0.12.4"
